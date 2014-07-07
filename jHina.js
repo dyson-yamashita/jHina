@@ -4,11 +4,12 @@
       version: "0.1"
   };
 
-  jHina.chord = function(canvasId,graph) {
-    var width =  300,
-        height = 300,
+  jHina.chord = function(canvasId,graphData) {
+    var width =  340,
+        height = 340,
         innerRadius =  Math.min(width, height) * .32,
         outerRadius = innerRadius * 1.1,
+        graph = $.extend(true,{},graphData),
         data = {
           labels: getLabels(graph),
           matrix: getMatrix(graph)
@@ -46,6 +47,7 @@
     ticks.append("text")
          .attr("x", 6)
          .attr("dy", ".2em")
+         .attr("font-size",12)
          .attr("transform", function(d) { return d.angle > Math.PI ? "rotate(180)translate(-16)" : null; })
          .style("text-anchor", function(d) { return d.angle > Math.PI ? "end" : null; })
          .text(function(d) { return d.label; });
@@ -126,7 +128,7 @@
 
   
      
-  jHina.graph = function(canvasId,graph){
+  jHina.graph = function(canvasId,graphData){
     var width = 300,
         height = 300,
         linkDistances = [100],
@@ -134,7 +136,8 @@
         nodeSize = 8,
         radius = 25,
         edgeClass = "edge",
-        nodeClass = "node";
+        nodeClass = "node",
+        graph = $.extend(true,{},graphData);
 
     var layout = d3.layout.force()
                    .nodes(graph.nodes)
@@ -170,7 +173,7 @@
        .attr("d", hexbin.hexagon())
        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
        .style("fill", "none")
-       .style("stroke", "#eee");
+       .style("stroke", "#ddd");
 
     var edges = svg.selectAll("line")
                    .data(graph.edges)
